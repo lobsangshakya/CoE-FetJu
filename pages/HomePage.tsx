@@ -129,9 +129,9 @@ const HomePage = () => {
                     </div>
                     <div>
                         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white text-center [text-shadow:1px_1px_2px_#cc6e00,-1px_-1px_2px_#cc6e00,1px_-1px_2px_#cc6e00,-1px_1px_2px_#cc6e00]">
-                                The Department of Computer Science and Engineering
+                                Department of Computer Science and Engineering
                         </h1>
-                        <p className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white text-center [text-shadow:1px_1px_2px_#cc6e00,-1px_-1px_2px_#cc6e00,1px_-1px_2px_#cc6e00,-1px_1px_2px_#cc6e00] mt-1">
+                        <p className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white text-center [text-shadow:1px_1px_2px_#cc6e00,-1px_-1px_2px_#cc6e00,1px_-1px_2px_#cc6e00,-1px_1px_2px_#cc6e00] mt-5">
                             Center of Excellence
                         </p>
                     </div>
