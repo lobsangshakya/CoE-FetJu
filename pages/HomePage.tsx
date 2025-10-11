@@ -1,29 +1,24 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { mockProjects, mockAnnouncements, mockEvents, mockCOEs } from '../data/mockData';
-import { COE } from '../types';
 import { TrophyIcon, SearchIcon, HandshakeIcon, GlobeIcon, CalendarIcon, UsersIcon, ChevronDownIcon } from '../components/icons';
 import Card from '../components/common/Card';
 
-// IMPROVED: StatItem component with darker glass, border, and enhanced icons
+// IMPROVED: StatItem component
 const StatItem = ({ icon, value, label }: { icon: React.ReactNode, value: string, label: string }) => (
     <div className="p-6 text-center flex flex-col items-center justify-center group 
                    bg-black/20 backdrop-blur-md border border-white/30 
                    rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-xl rounded-bl-xl
                    transition-all duration-300 hover:bg-black/40 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/20">
-        
-        {/* Improvised Icon Container */}
         <div className="mb-4 bg-orange-500/10 rounded-full p-4 border border-orange-500/30 transition-all duration-300 group-hover:bg-orange-500/20 group-hover:border-orange-500/50">
             <div className="text-orange-400 transition-transform duration-300 group-hover:scale-110">{icon}</div>
         </div>
-        
         <p className="text-4xl font-bold text-white">{value}</p>
         <p className="text-gray-300 mt-1">{label}</p>
     </div>
 );
 
-// NEW: CommitteeMemberCard component
-// FIX: Changed CommitteeMemberCard to a React.FC to fix an issue where the 'key' prop was being incorrectly assigned, causing a type error.
+// CommitteeMemberCard
 const CommitteeMemberCard: React.FC<{ name: string; title: string }> = ({ name, title }) => (
     <div className="bg-black/20 backdrop-blur-md border border-white/30 rounded-lg p-6 text-center transition-all duration-300 hover:bg-black/40 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/20">
         <h3 className="text-xl font-bold text-white">{name}</h3>
@@ -31,9 +26,8 @@ const CommitteeMemberCard: React.FC<{ name: string; title: string }> = ({ name, 
     </div>
 );
 
-// NEW: AccordionItem component
-// FIX: Changed component definition to use React.FC to correctly handle children prop type.
-const AccordionItem: React.FC<{title: string; children: React.ReactNode}> = ({ title, children }) => {
+// AccordionItem
+const AccordionItem: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -47,19 +41,15 @@ const AccordionItem: React.FC<{title: string; children: React.ReactNode}> = ({ t
                 <ChevronDownIcon className={`h-6 w-6 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
             </button>
             <div
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                    isOpen ? 'max-h-40' : 'max-h-0'
-                }`}
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-40' : 'max-h-0'}`}
             >
-                <div className="p-4 bg-black/20 text-gray-300">
-                    {children}
-                </div>
+                <div className="p-4 bg-black/20 text-gray-300">{children}</div>
             </div>
         </div>
     );
 };
 
-// NEW: Data for new sections
+// Executive Committee Data
 const executiveCommittee = [
     { name: 'Dr. Kamlesh Tiwari', title: 'HoD / CSE' },
     { name: 'Dr. Deepak Sinha', title: 'Professor / CSE' },
@@ -67,10 +57,11 @@ const executiveCommittee = [
     { name: 'Dr. T. R. Mahesh', title: 'Associate Professor' }
 ];
 
+// CoE Leaders Data (Emerging Tech removed)
 const coeLeaders = [
     { title: 'AI & ML CoE', content: 'Dr. Swati Gupta – AI & ML CoE Leader' },
     { title: 'Cyber & Systems Security CoE', content: 'Dr. Sunanda Das – Cyber & Systems Security CoE Leader' },
-    { title: 'IoT, Robotics & Emerging Tech CoE', content: 'Dr. Vikram Neerugatti – IoT, Robotics & Emerging Tech CoE Leader' },
+    { title: 'IoT, Robotics CoE', content: 'Dr. Vikram Neerugatti – IoT & Robotics CoE Leader' },
     { title: 'Networking & HPC CoE', content: 'Dr. Nishant Tripathi – Networking & HPC CoE Leader' },
     { title: 'Theoretical CS CoE', content: 'Dr. Subhankar Ghosal – Theoretical CS CoE Leader' }
 ];
@@ -81,15 +72,13 @@ const coeLogoMap: { [key: string]: string } = {
     'iot-robotics': 'https://i.postimg.cc/J0H79vm0/image.png',
     'networking-hpc': 'https://i.postimg.cc/XNt9p0rg/image.png',
     'theoretical-cs': 'https://i.postimg.cc/fbH9Z44d/image.png',
-    'emerging-tech': 'https://i.postimg.cc/qqZ1M2QG/image.png',
 };
 
 const HomePage = () => {
     const featuredProject = mockProjects[0];
     const latestAnnouncement = mockAnnouncements[0];
     const upcomingEvent = mockEvents[0];
-    
-    // NEW: Creative event data for the redesigned panel
+
     const newEvents = [
         { title: 'AI in Healthcare Webinar', date: '2024-10-15', category: 'WEBINAR', day: '15', month: 'OCT' },
         { title: 'Cybersecurity Workshop Series', date: '2024-10-22', category: 'WORKSHOP', day: '22', month: 'OCT' },
@@ -97,7 +86,6 @@ const HomePage = () => {
         { title: 'Guest Lecture: Quantum Computing', date: '2024-11-10', category: 'LECTURE', day: '10', month: 'NOV' },
     ];
 
-    // Helper for event category tag styling
     const getCategoryTagStyle = (category: string) => {
         switch (category) {
             case 'WEBINAR': return 'bg-blue-500/50 text-blue-200';
@@ -107,7 +95,7 @@ const HomePage = () => {
             default: return 'bg-gray-500/50 text-gray-200';
         }
     };
-    
+
     const backgroundStyle = {
         backgroundImage: `linear-gradient(rgba(10, 25, 47, 0.7), rgba(10, 25, 47, 0.7)), url('https://i.postimg.cc/9zH91CXP/download.jpg')`,
         backgroundSize: 'cover',
@@ -115,21 +103,17 @@ const HomePage = () => {
         backgroundAttachment: 'fixed'
     };
 
-
     return (
         <div style={backgroundStyle}>
+            {/* Hero Section */}
             <section className="pt-12 pb-8 text-center">
                 <div className="flex items-center justify-center gap-3 sm:gap-4 px-4">
                     <div className="h-16 m:h-20 lg:h-24 flex-shrink-0">
-                        <img
-                            src="https://i.postimg.cc/zv1LJqfk/image.png"
-                            alt="Center of Excellence Logo"
-                            className="h-full w-auto"
-                        />
+                        <img src="https://i.postimg.cc/zv1LJqfk/image.png" alt="Center of Excellence Logo" className="h-full w-auto" />
                     </div>
                     <div>
                         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white text-center [text-shadow:1px_1px_2px_#cc6e00,-1px_-1px_2px_#cc6e00,1px_-1px_2px_#cc6e00,-1px_1px_2px_#cc6e00]">
-                                Department of Computer Science and Engineering
+                            Department of Computer Science and Engineering
                         </h1>
                         <p className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white text-center [text-shadow:1px_1px_2px_#cc6e00,-1px_-1px_2px_#cc6e00,1px_-1px_2px_#cc6e00,-1px_1px_2px_#cc6e00] mt-5">
                             Center of Excellence
@@ -138,11 +122,10 @@ const HomePage = () => {
                 </div>
             </section>
 
-            
+            {/* CoEs + Events Section */}
             <section className="py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col lg:flex-row gap-8">
-                        
                         <div className="lg:w-3/4">
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {mockCOEs.map(coe => (
@@ -153,11 +136,7 @@ const HomePage = () => {
                                         aria-label={`Navigate to ${coe.name} page`}
                                     >
                                         <div className="flex justify-center mb-4">
-                                            <img 
-                                                src={coeLogoMap[coe.id] || coe.logoUrl}
-                                                alt={`${coe.name} Logo`}
-                                                className="h-16 w-16 object-contain transition-transform duration-300 group-hover:scale-110"
-                                            />
+                                            <img src={coeLogoMap[coe.id] || coe.logoUrl} alt={`${coe.name} Logo`} className="h-16 w-16 object-contain transition-transform duration-300 group-hover:scale-110" />
                                         </div>
                                         <h3 className="text-xl font-bold text-white">{coe.name}</h3>
                                         <p className="text-sm text-gray-400 mt-1">{coe.longName}</p>
@@ -166,12 +145,12 @@ const HomePage = () => {
                             </div>
                         </div>
 
-                        {/* Right Section (25%) - Creative Events Panel */}
+                        {/* Right Section (Events Panel) */}
                         <div className="lg:w-1/4">
-                             <div className="h-full flex flex-col bg-black/20 backdrop-blur-md border border-white/30 rounded-lg p-6">
+                            <div className="h-full flex flex-col bg-black/20 backdrop-blur-md border border-white/30 rounded-lg p-6">
                                 <h3 className="text-2xl font-bold text-white mb-6">Events & Notifications</h3>
                                 <div className="space-y-4 flex-grow overflow-y-auto pr-2">
-                                     {newEvents.map((event, index) => (
+                                    {newEvents.map((event, index) => (
                                         <div key={index} className="flex items-center gap-4 bg-white/5 p-3 rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
                                             <div className="flex-shrink-0 text-center bg-orange-accent/80 rounded-md p-2 w-16">
                                                 <p className="text-2xl font-bold text-white">{event.day}</p>
@@ -194,9 +173,8 @@ const HomePage = () => {
                     </div>
                 </div>
             </section>
-            {/* --- END: Redesigned Interactive Hero Section --- */}
-            
-            {/* --- IMPROVED: Stats Section (UNCHANGED) --- */}
+
+            {/* Stats Section */}
             <section className="py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-12">
@@ -211,11 +189,10 @@ const HomePage = () => {
                     </div>
                 </div>
             </section>
-            
-             {/* --- START: Executive Committee & CoE Section (UNCHANGED) --- */}
+
+            {/* Executive Committee & CoE Accordion */}
             <section className="py-20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
-                    {/* Executive Committee */}
                     <div>
                         <div className="text-center mb-12">
                             <h2 className="text-3xl font-bold text-white sm:text-4xl">Executive Committee</h2>
@@ -225,26 +202,23 @@ const HomePage = () => {
                             {executiveCommittee.map(member => <CommitteeMemberCard key={member.name} name={member.name} title={member.title} />)}
                         </div>
                     </div>
-                    {/* Center of Excellence */}
                     <div>
-                         <div className="text-center mb-12">
+                        <div className="text-center mb-12">
                             <h2 className="text-3xl font-bold text-white sm:text-4xl">Center of Excellence in FETJU</h2>
                             <p className="mt-4 text-lg text-gray-300">Fostering specialized research and innovation across key domains.</p>
                         </div>
-                         <div className="max-w-3xl mx-auto bg-black/20 backdrop-blur-md border border-white/30 rounded-lg overflow-hidden">
+                        <div className="max-w-3xl mx-auto bg-black/20 backdrop-blur-md border border-white/30 rounded-lg overflow-hidden">
                             {coeLeaders.map(leader => <AccordionItem key={leader.title} title={leader.title}>{leader.content}</AccordionItem>)}
-                         </div>
+                        </div>
                     </div>
                 </div>
             </section>
-            {/* --- END: Executive Committee & CoE Section (UNCHANGED) --- */}
 
-            {/* Featured Content Section (UNCHANGED) */}
+            {/* Featured Content Section */}
             <section className="py-16 bg-gray-100">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <h2 className="text-3xl font-bold text-center text-dark-blue mb-12">Highlights</h2>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        {/* Featured Project */}
                         <Card variant="elevated">
                             <img className="h-48 w-full object-cover" src={featuredProject.imageUrl} alt={featuredProject.title} />
                             <div className="p-6">
@@ -254,7 +228,6 @@ const HomePage = () => {
                             </div>
                         </Card>
 
-                        {/* Latest Announcement */}
                         <Card variant="elevated">
                             <div className="p-6">
                                 <h3 className="text-lg font-semibold text-orange-accent">Latest News</h3>
@@ -265,7 +238,6 @@ const HomePage = () => {
                             </div>
                         </Card>
 
-                        {/* Upcoming Event */}
                         <Card variant="elevated">
                             <div className="p-6">
                                 <h3 className="text-lg font-semibold text-orange-accent">Upcoming Event</h3>
