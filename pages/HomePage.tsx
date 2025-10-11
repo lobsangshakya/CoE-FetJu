@@ -81,7 +81,7 @@ const coeLogoMap: { [key: string]: string } = {
     'iot-robotics': 'https://i.postimg.cc/J0H79vm0/image.png',
     'networking-hpc': 'https://i.postimg.cc/XNt9p0rg/image.png',
     'theoretical-cs': 'https://i.postimg.cc/fbH9Z44d/image.png',
-    // 'emerging-tech': 'https://i.postimg.cc/qqZ1M2QG/image.png',
+    'emerging-tech': 'https://i.postimg.cc/qqZ1M2QG/image.png',
 };
 
 const HomePage = () => {
