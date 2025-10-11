@@ -67,11 +67,10 @@ const executiveCommittee = [
     { name: 'Dr. T. R. Mahesh', title: 'Associate Professor' }
 ];
 
-// MODIFIED: Renamed 'IoT, Robotics & Emerging Tech CoE' to 'IoT & Robotics CoE'
+// MODIFIED: Removed the 'IoT, Robotics & Emerging Tech CoE' entry entirely.
 const coeLeaders = [
     { title: 'AI & ML CoE', content: 'Dr. Swati Gupta – AI & ML CoE Leader' },
     { title: 'Cyber & Systems Security CoE', content: 'Dr. Sunanda Das – Cyber & Systems Security CoE Leader' },
-    { title: 'IoT & Robotics CoE', content: 'Dr. Vikram Neerugatti – IoT & Robotics CoE Leader' },
     { title: 'Networking & HPC CoE', content: 'Dr. Nishant Tripathi – Networking & HPC CoE Leader' },
     { title: 'Theoretical CS CoE', content: 'Dr. Subhankar Ghosal – Theoretical CS CoE Leader' }
 ];
@@ -88,8 +87,11 @@ const HomePage = () => {
     const featuredProject = mockProjects[0];
     const latestAnnouncement = mockAnnouncements[0];
     const upcomingEvent = mockEvents[0];
+    
+    // MODIFIED: Filter out the CoE to be removed before rendering.
+    // We assume the one to be removed has the id 'iot-robotics'.
+    const filteredCOEs = mockCOEs.filter(coe => coe.id !== 'iot-robotics');
 
-    // NEW: Creative event data for the redesigned panel
     const newEvents = [
         { title: 'AI in Healthcare Webinar', date: '2024-10-15', category: 'WEBINAR', day: '15', month: 'OCT' },
         { title: 'Cybersecurity Workshop Series', date: '2024-10-22', category: 'WORKSHOP', day: '22', month: 'OCT' },
@@ -97,7 +99,6 @@ const HomePage = () => {
         { title: 'Guest Lecture: Quantum Computing', date: '2024-11-10', category: 'LECTURE', day: '10', month: 'NOV' },
     ];
 
-    // Helper for event category tag styling
     const getCategoryTagStyle = (category: string) => {
         switch (category) {
             case 'WEBINAR': return 'bg-blue-500/50 text-blue-200';
@@ -143,11 +144,10 @@ const HomePage = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col lg:flex-row gap-8">
 
-                        {/* MODIFIED: CoE layout changed to 3 on top, 2 on bottom */}
                         <div className="lg:w-3/4">
-                            {/* Top Row: 3 items */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {mockCOEs.slice(0, 3).map(coe => (
+                             {/* MODIFIED: Layout is now a 2x2 grid for the 4 remaining CoEs */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                {filteredCOEs.map(coe => (
                                     <NavLink
                                         key={coe.id}
                                         to={`/coe/${coe.id}`}
@@ -166,32 +166,6 @@ const HomePage = () => {
                                     </NavLink>
                                 ))}
                             </div>
-
-                            {/* Bottom Row: 2 items, centered */}
-                            {mockCOEs.length > 3 && (
-                                <div className="mt-6 flex justify-center">
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full lg:w-2/3">
-                                        {mockCOEs.slice(3).map(coe => (
-                                            <NavLink
-                                                key={coe.id}
-                                                to={`/coe/${coe.id}`}
-                                                className="group text-center p-6 bg-black/20 backdrop-blur-md border border-white/20 rounded-lg transition-all duration-300 hover:bg-black/40 hover:scale-105 hover:shadow-orange-glow"
-                                                aria-label={`Maps to ${coe.name} page`}
-                                            >
-                                                <div className="flex justify-center mb-4">
-                                                    <img
-                                                        src={coeLogoMap[coe.id] || coe.logoUrl}
-                                                        alt={`${coe.name} Logo`}
-                                                        className="h-16 w-16 object-contain transition-transform duration-300 group-hover:scale-110"
-                                                    />
-                                                </div>
-                                                <h3 className="text-xl font-bold text-white">{coe.name}</h3>
-                                                <p className="text-sm text-gray-400 mt-1">{coe.longName}</p>
-                                            </NavLink>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
                         </div>
 
                         {/* Right Section (25%) - Creative Events Panel */}
@@ -240,7 +214,7 @@ const HomePage = () => {
                 </div>
             </section>
 
-             {/* --- START: Executive Committee & CoE Section (UNCHANGED) --- */}
+             {/* --- START: Executive Committee & CoE Section --- */}
             <section className="py-20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
                     {/* Executive Committee */}
@@ -265,7 +239,7 @@ const HomePage = () => {
                     </div>
                 </div>
             </section>
-            {/* --- END: Executive Committee & CoE Section (UNCHANGED) --- */}
+            {/* --- END: Executive Committee & CoE Section --- */}
 
             {/* Featured Content Section (UNCHANGED) */}
             <section className="py-16 bg-gray-100">
