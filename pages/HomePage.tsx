@@ -7,16 +7,16 @@ import Card from '../components/common/Card';
 
 // IMPROVED: StatItem component with darker glass, border, and enhanced icons
 const StatItem = ({ icon, value, label }: { icon: React.ReactNode, value: string, label: string }) => (
-    <div className="p-6 text-center flex flex-col items-center justify-center group 
-                   bg-black/20 backdrop-blur-md border border-white/30 
+    <div className="p-6 text-center flex flex-col items-center justify-center group
+                   bg-black/20 backdrop-blur-md border border-white/30
                    rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-xl rounded-bl-xl
                    transition-all duration-300 hover:bg-black/40 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/20">
-        
+
         {/* Improvised Icon Container */}
         <div className="mb-4 bg-orange-500/10 rounded-full p-4 border border-orange-500/30 transition-all duration-300 group-hover:bg-orange-500/20 group-hover:border-orange-500/50">
             <div className="text-orange-400 transition-transform duration-300 group-hover:scale-110">{icon}</div>
         </div>
-        
+
         <p className="text-4xl font-bold text-white">{value}</p>
         <p className="text-gray-300 mt-1">{label}</p>
     </div>
@@ -67,10 +67,11 @@ const executiveCommittee = [
     { name: 'Dr. T. R. Mahesh', title: 'Associate Professor' }
 ];
 
+// MODIFIED: Renamed 'IoT, Robotics & Emerging Tech CoE' to 'IoT & Robotics CoE'
 const coeLeaders = [
     { title: 'AI & ML CoE', content: 'Dr. Swati Gupta – AI & ML CoE Leader' },
     { title: 'Cyber & Systems Security CoE', content: 'Dr. Sunanda Das – Cyber & Systems Security CoE Leader' },
-    { title: 'IoT, Robotics & Emerging Tech CoE', content: 'Dr. Vikram Neerugatti – IoT, Robotics & Emerging Tech CoE Leader' },
+    { title: 'IoT & Robotics CoE', content: 'Dr. Vikram Neerugatti – IoT & Robotics CoE Leader' },
     { title: 'Networking & HPC CoE', content: 'Dr. Nishant Tripathi – Networking & HPC CoE Leader' },
     { title: 'Theoretical CS CoE', content: 'Dr. Subhankar Ghosal – Theoretical CS CoE Leader' }
 ];
@@ -81,14 +82,13 @@ const coeLogoMap: { [key: string]: string } = {
     'iot-robotics': 'https://i.postimg.cc/J0H79vm0/image.png',
     'networking-hpc': 'https://i.postimg.cc/XNt9p0rg/image.png',
     'theoretical-cs': 'https://i.postimg.cc/fbH9Z44d/image.png',
-    // 'emerging-tech': 'https://i.postimg.cc/qqZ1M2QG/image.png',
 };
 
 const HomePage = () => {
     const featuredProject = mockProjects[0];
     const latestAnnouncement = mockAnnouncements[0];
     const upcomingEvent = mockEvents[0];
-    
+
     // NEW: Creative event data for the redesigned panel
     const newEvents = [
         { title: 'AI in Healthcare Webinar', date: '2024-10-15', category: 'WEBINAR', day: '15', month: 'OCT' },
@@ -107,7 +107,7 @@ const HomePage = () => {
             default: return 'bg-gray-500/50 text-gray-200';
         }
     };
-    
+
     const backgroundStyle = {
         backgroundImage: `linear-gradient(rgba(10, 25, 47, 0.7), rgba(10, 25, 47, 0.7)), url('https://i.postimg.cc/9zH91CXP/download.jpg')`,
         backgroundSize: 'cover',
@@ -138,22 +138,24 @@ const HomePage = () => {
                 </div>
             </section>
 
-            
+
             <section className="py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col lg:flex-row gap-8">
-                        
+
+                        {/* MODIFIED: CoE layout changed to 3 on top, 2 on bottom */}
                         <div className="lg:w-3/4">
+                            {/* Top Row: 3 items */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {mockCOEs.map(coe => (
+                                {mockCOEs.slice(0, 3).map(coe => (
                                     <NavLink
                                         key={coe.id}
                                         to={`/coe/${coe.id}`}
                                         className="group text-center p-6 bg-black/20 backdrop-blur-md border border-white/20 rounded-lg transition-all duration-300 hover:bg-black/40 hover:scale-105 hover:shadow-orange-glow"
-                                        aria-label={`Navigate to ${coe.name} page`}
+                                        aria-label={`Maps to ${coe.name} page`}
                                     >
                                         <div className="flex justify-center mb-4">
-                                            <img 
+                                            <img
                                                 src={coeLogoMap[coe.id] || coe.logoUrl}
                                                 alt={`${coe.name} Logo`}
                                                 className="h-16 w-16 object-contain transition-transform duration-300 group-hover:scale-110"
@@ -164,6 +166,32 @@ const HomePage = () => {
                                     </NavLink>
                                 ))}
                             </div>
+
+                            {/* Bottom Row: 2 items, centered */}
+                            {mockCOEs.length > 3 && (
+                                <div className="mt-6 flex justify-center">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full lg:w-2/3">
+                                        {mockCOEs.slice(3).map(coe => (
+                                            <NavLink
+                                                key={coe.id}
+                                                to={`/coe/${coe.id}`}
+                                                className="group text-center p-6 bg-black/20 backdrop-blur-md border border-white/20 rounded-lg transition-all duration-300 hover:bg-black/40 hover:scale-105 hover:shadow-orange-glow"
+                                                aria-label={`Maps to ${coe.name} page`}
+                                            >
+                                                <div className="flex justify-center mb-4">
+                                                    <img
+                                                        src={coeLogoMap[coe.id] || coe.logoUrl}
+                                                        alt={`${coe.name} Logo`}
+                                                        className="h-16 w-16 object-contain transition-transform duration-300 group-hover:scale-110"
+                                                    />
+                                                </div>
+                                                <h3 className="text-xl font-bold text-white">{coe.name}</h3>
+                                                <p className="text-sm text-gray-400 mt-1">{coe.longName}</p>
+                                            </NavLink>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         {/* Right Section (25%) - Creative Events Panel */}
@@ -195,7 +223,7 @@ const HomePage = () => {
                 </div>
             </section>
             {/* --- END: Redesigned Interactive Hero Section --- */}
-            
+
             {/* --- IMPROVED: Stats Section (UNCHANGED) --- */}
             <section className="py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -211,7 +239,7 @@ const HomePage = () => {
                     </div>
                 </div>
             </section>
-            
+
              {/* --- START: Executive Committee & CoE Section (UNCHANGED) --- */}
             <section className="py-20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
